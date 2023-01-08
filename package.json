@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon index.js",
+    "dev": "nodemon index.js --exec \"npx eslint .\"",
     "start": "node index.js"
   },
   "repository": {
@@ -28,6 +28,7 @@
     "mongoose": "^6.8.3"
   },
   "devDependencies": {
+    "eslint": "^8.31.0",
     "nodemon": "^2.0.20"
   }
 }
