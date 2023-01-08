@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon index.js --exec \"npx eslint .\"",
+    "dev": "nodemon index.js --exec \"eslint . && node\"",
     "start": "node index.js"
   },
   "repository": {
