@@ -40,7 +40,7 @@ export const register = async (req, res) => {
     await newUser.save()
 
     res.status(201).json({
-      newUser,
+      user: newUser,
       token,
       message: 'Регистрация прошла успешно.'
     })
@@ -79,7 +79,7 @@ export const login = async (req, res) => {
 
     res.json({
       token,
-      isUsedLogin,
+      user: isUsedLogin,
       message: 'Успешная авторизация.'
     })
   } catch (error) {
@@ -103,7 +103,7 @@ export const getMe = async (req, res) => {
     }
 
     res.json({
-      isValidId
+      user: isValidId
     })
   } catch (error) {
     console.log(error)
