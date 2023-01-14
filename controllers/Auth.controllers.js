@@ -102,8 +102,19 @@ export const getMe = async (req, res) => {
       });
     }
 
+    const token = jwt.sign(
+      {
+        id: isValidId._id
+      },
+      process.env.JWT_SECRED,
+      {
+        expiresIn: '30d'
+      }
+    )
+
     res.json({
       user: isValidId,
+      token
     })
   } catch (error) {
     console.log(error)
