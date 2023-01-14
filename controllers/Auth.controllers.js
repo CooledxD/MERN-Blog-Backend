@@ -94,7 +94,7 @@ export const login = async (req, res) => {
 // Get me
 export const getMe = async (req, res) => {
   try {
-    const isValidId = await User.findOne(req.userId)
+    const isValidId = await User.findById(req.userId)
 
     if (!isValidId) {
       return res.status(404).json({
@@ -103,7 +103,7 @@ export const getMe = async (req, res) => {
     }
 
     res.json({
-      user: isValidId
+      user: isValidId,
     })
   } catch (error) {
     console.log(error)
