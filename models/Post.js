@@ -19,11 +19,14 @@ const PostSchema = new mongoose.Schema(
       default: 0
     },
     author: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: mongoose.Types.ObjectId,
       ref: 'User'
     },
+    username: {
+      type: String
+    },
     comments: [{
-      type: mongoose.Schema.Types.ObjectId,
+      type: mongoose.Types.ObjectId,
       ref: 'Comment'
     }],
     tags: {
