@@ -2,8 +2,10 @@ import express from 'express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import cors from 'cors'
+import fileUpload from 'express-fileupload'
 
-import authRoute from './routers/Auth.routers.js'
+import authRoute from './routes/Auth.routes.js'
+import postRoute from './routes/Posts.routes.js'
 
 dotenv.config()
 const app = express()
@@ -13,10 +15,13 @@ const PORT = process.env.PORT
 
 // Middleware
 app.use(cors())
+app.use(fileUpload())
+app.use(express.static('uploads'))
 app.use(express.json())
 
 // Routes
 app.use('/auth', authRoute)
+app.use('/posts', postRoute)
 
 
 
