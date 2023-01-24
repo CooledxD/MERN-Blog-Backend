@@ -28,7 +28,7 @@ export const createPost = async (req, res) => {
       })
 
       await newPost.save()
-      await User.findOneAndUpdate(userId, {
+      await User.findByIdAndUpdate(userId, {
         $push: { posts: newPost }
       })
 
@@ -47,7 +47,7 @@ export const createPost = async (req, res) => {
 
     await newPost.save()
 
-    await User.findOneAndUpdate(userId, {
+    await User.findByIdAndUpdate(userId, {
       $push: { posts: newPost }
     })
 
