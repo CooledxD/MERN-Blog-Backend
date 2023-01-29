@@ -6,8 +6,8 @@ import User from '../models/userModel.js'
 // Register
 export const register = async (req, res) => {
   try {
-    const { username } = req.body
-    const { password } = req.body
+    const username = req.body.username.trim()
+    const password = req.body.password.trim()
     const { email } = req.body
     const { avatar } = req.body
     const isUsedEmail = await User.findOne({ email })

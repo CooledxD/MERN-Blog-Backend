@@ -5,7 +5,7 @@ import User from "../models/userModel.js";
 export const createComment = async (req, res) => {
   try {
     const { postId } = req.body
-    const { comment } = req.body
+    const comment = req.body.comment.trim()
     const { userId } = req
     const { username } = await User.findById(userId)
 

@@ -10,8 +10,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 // Create Post
 export const createPost = async (req, res) => {
   try {
-    const { title } = req.body
-    const { text } = req.body
+    const title = req.body.title.trim()
+    const text = req.body.text.trim()
     const { userId } = req
     const name = await User.findById(userId)
 
@@ -131,6 +131,7 @@ export const getUserPosts = async (req, res) => {
 export const removePost = async (req, res) => {
   try {
     const post = await Post.findByIdAndDelete(req.params.id)
+
     if(!post) {
       return res.status(404).json({
         message: 'Такого поста не существует.'
@@ -156,8 +157,8 @@ export const removePost = async (req, res) => {
 // Update Post
 export const updatePost = async (req, res) => {
   try {
-    const { title } = req.body
-    const { text } = req.body
+    const title = req.body.title.trim()
+    const text = req.body.text.trim()
     const { id } = req.body
     const post = await Post.findById(id)
 
