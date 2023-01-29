@@ -40,7 +40,11 @@ export const register = async (req, res) => {
     await newUser.save()
 
     res.status(201).json({
-      user: newUser,
+      user: {
+        username: newUser.username,
+        avatar: newUser.avatar,
+        posts: newUser.posts
+      },
       token,
       message: 'Регистрация прошла успешно.'
     })
@@ -78,8 +82,12 @@ export const login = async (req, res) => {
     )
 
     res.json({
+      user: {
+        username: isUsedLogin.username,
+        avatar: isUsedLogin.avatar,
+        posts: isUsedLogin.posts
+      },
       token,
-      user: isUsedLogin,
       message: 'Успешная авторизация.'
     })
   } catch (error) {
@@ -113,7 +121,11 @@ export const getMe = async (req, res) => {
     )
 
     res.json({
-      user: isValidId,
+      user: {
+        username: isValidId.username,
+        avatar: isValidId.avatar,
+        posts: isValidId.posts
+      },
       token
     })
   } catch (error) {
