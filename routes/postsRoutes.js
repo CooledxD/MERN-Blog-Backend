@@ -9,7 +9,7 @@ import {
   removePost, 
   updatePost, 
   getPostComments 
-} from "../controllers/Posts.controllers.js";
+} from "../controllers/postControllers.js";
 
 const router = new Router()
 

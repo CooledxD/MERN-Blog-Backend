@@ -4,9 +4,9 @@ import dotenv from 'dotenv'
 import cors from 'cors'
 import fileUpload from 'express-fileupload'
 
-import authRoute from './routes/Auth.routes.js'
-import postRoute from './routes/Posts.routes.js'
-import commentRoute from './routes/Comment.routes.js'
+import authRoute from './routes/authRoutes.js'
+import postRoute from './routes/postsRoutes.js'
+import commentRoute from './routes/commentsRoutes.js'
 
 dotenv.config()
 const app = express()

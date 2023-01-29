@@ -1,6 +1,6 @@
-import Post from '../models/Post.js'
-import User from '../models/User.js'
-import Comment from '../models/Comment.js'
+import Post from '../models/postModel.js'
+import User from '../models/userModel.js'
+import Comment from '../models/commentModel.js'
 
 // Back __dirname
 import path, { dirname } from 'path'
