@@ -10,11 +10,18 @@ export const register = async (req, res) => {
     const { password } = req.body
     const { email } = req.body
     const { avatar } = req.body
+    const isUsedEmail = await User.findOne({ email })
     const isUsedLogin = await User.findOne({ username })
 
     if (isUsedLogin) {
       return res.status(409).json({
         message: 'Данный логин уже существует.'
+      })
+    }
+
+    if (isUsedEmail) {
+      return res.status(409).json({
+        message: 'Данный email уже используется.'
       })
     }
 
