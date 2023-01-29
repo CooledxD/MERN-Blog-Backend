@@ -20,7 +20,8 @@ const UserSchema = new mongoose.Schema(
     },
 
     avatar: {
-      type: String
+      type: String,
+      default: ''
     },
     
     posts: [{
