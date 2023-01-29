@@ -30,12 +30,6 @@ const UserSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-    toJSON: {
-      transform(_, ret) {
-        delete ret.password
-        delete ret._id
-      }
-    }
   }
 )
 
