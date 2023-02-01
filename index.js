@@ -8,11 +8,11 @@ import authRoute from './routes/authRoutes.js'
 import postRoute from './routes/postsRoutes.js'
 import commentRoute from './routes/commentsRoutes.js'
 
+// env config
 dotenv.config()
-const app = express()
 
-// Constants
-const PORT = process.env.PORT
+// app
+const app = express()
 
 // Middleware
 app.use(cors())
@@ -25,15 +25,25 @@ app.use('/auth', authRoute)
 app.use('/posts', postRoute)
 app.use('/comments', commentRoute)
 
+// Connect DB
+async function dbConnect() {
+  try {
+    mongoose.set('strictQuery', false)
 
+    await mongoose.connect(`${process.env.DB_URL}`).then(() => {
+      console.log(`The connection to the database is established.`)
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 // Start
 async function start() {
   try {
-    mongoose.set('strictQuery', false)
-    await mongoose.connect(`mongodb://127.0.0.1:27017/mern-blog`)
+    await dbConnect()
 
-    app.listen(PORT, () => console.log(`Server started on port: ${PORT}`))
+    app.listen(process.env.PORT, () => console.log(`Server started on port: ${process.env.PORT}`))
   } catch (error) {
     console.log(error)
   }

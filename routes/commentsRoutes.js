@@ -6,6 +6,7 @@ import { createComment, removeComment } from '../controllers/commentsControllers
 const router = new Router()
 
 // Create comment
+// /comments/:id
 router.post('/:id', checkAuth, createComment)
 
 // Remove comment
