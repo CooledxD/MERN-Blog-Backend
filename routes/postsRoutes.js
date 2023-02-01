@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { checkAuth } from '../utils/checkAuth.js'
+import { checkAuth } from '../middleware/checkAuth.js'
 import { 
   createPost, 
   getAllPosts, 
