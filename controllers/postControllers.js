@@ -1,49 +1,20 @@
-import { v4 as uuidv4 } from 'uuid'
-
 import Post from '../models/postModel.js'
 import User from '../models/userModel.js'
 import Comment from '../models/commentModel.js'
-
-// Back __dirname
-import path, { dirname } from 'path'
-import { fileURLToPath } from 'url'
-const __dirname = dirname(fileURLToPath(import.meta.url))
 
 // Create Post
 export const createPost = async (req, res) => {
   try {
     const title = req.body.title.trim()
     const text = req.body.text.trim()
+    const image = req.file ? req.file.filename : ''
     const { userId } = req
     const name = await User.findById(userId)
-
-    if(req.files) {
-      const fileName = uuidv4() + '-' + Date.now() + path.extname(req.files.image.name)
-
-      req.files.image.mv(path.join(__dirname, '../uploads', fileName))
-
-      const newPost = new Post({
-        title,
-        text,
-        image: fileName,
-        author: userId,
-        username: name.username
-      })
-
-      await newPost.save()
-      await User.findByIdAndUpdate(userId, {
-        $push: { posts: newPost }
-      })
-
-      return res.status(201).json({
-        newPost,
-        message: 'Статья успешно создана.'
-      })
-    }
 
     const newPost = new Post({
       title,
       text,
+      image,
       author: userId,
       username: name.username
     })
@@ -161,15 +132,12 @@ export const updatePost = async (req, res) => {
   try {
     const title = req.body.title.trim()
     const text = req.body.text.trim()
+    const image = req.file ? req.file.filename : ''
     const { id } = req.body
     const post = await Post.findById(id)
 
-    if(req.files) {
-      const fileName = uuidv4() + '-' + Date.now() + path.extname(req.files.image.name)
-
-      req.files.image.mv(path.join(__dirname, '../uploads', fileName))
-
-      post.image = fileName || ''
+    if(image) {
+      post.image = image
     }
 
     post.title = title

@@ -2,7 +2,6 @@ import express from 'express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import cors from 'cors'
-import fileUpload from 'express-fileupload'
 
 import authRoute from './routes/authRoutes.js'
 import postRoute from './routes/postsRoutes.js'
@@ -16,7 +15,6 @@ const app = express()
 
 // Middleware
 app.use(cors())
-app.use(fileUpload())
 app.use(express.static('uploads'))
 app.use(express.json())
 

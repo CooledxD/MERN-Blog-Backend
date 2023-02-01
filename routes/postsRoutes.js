@@ -10,12 +10,13 @@ import {
   updatePost, 
   getPostComments 
 } from "../controllers/postControllers.js";
+import { upload } from "../middleware/multer.js";
 
 const router = new Router()
 
 // Create Post
 // /posts/
-router.post('/', checkAuth, createPost)
+router.post('/', upload, checkAuth, createPost)
 
 // Get All Posts
 // /posts/
@@ -31,7 +32,7 @@ router.get('/:id', getPostById)
 
 // Update Post
 // /posts/:id
-router.put('/:id', checkAuth, updatePost)
+router.put('/:id', upload, checkAuth, updatePost)
 
 // Remove post
 // /posts/:id
