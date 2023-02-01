@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid'
+
 import Post from '../models/postModel.js'
 import User from '../models/userModel.js'
 import Comment from '../models/commentModel.js'
@@ -16,7 +18,7 @@ export const createPost = async (req, res) => {
     const name = await User.findById(userId)
 
     if(req.files) {
-      const fileName = Date.now().toString() + req.files.image.name
+      const fileName = uuidv4() + '-' + Date.now() + path.extname(req.files.image.name)
 
       req.files.image.mv(path.join(__dirname, '../uploads', fileName))
 
@@ -163,7 +165,7 @@ export const updatePost = async (req, res) => {
     const post = await Post.findById(id)
 
     if(req.files) {
-      const fileName = Date.now().toString() + req.files.image.name
+      const fileName = uuidv4() + '-' + Date.now() + path.extname(req.files.image.name)
 
       req.files.image.mv(path.join(__dirname, '../uploads', fileName))
 
