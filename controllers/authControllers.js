@@ -1,4 +1,4 @@
-import bcrypt from 'bcryptjs'
+import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
 import User from '../models/userModel.js'
@@ -25,8 +25,7 @@ export const register = async (req, res) => {
       })
     }
 
-    const salt = bcrypt.genSaltSync(7)
-    const hash = bcrypt.hashSync(password, salt)
+    const hash = bcrypt.hashSync(password, 10)
 
     const newUser = new User({
       username,
