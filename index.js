@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import cors from 'cors'
 import helmet from 'helmet'
+import compression from 'compression'
 
 import authRoute from './routes/authRoutes.js'
 import postRoute from './routes/postsRoutes.js'
@@ -20,6 +21,7 @@ app.use(express.static('uploads'))
 app.use(express.json())
 app.use(helmet())
 app.disable('x-powered-by')
+app.use(compression())
 
 // Routes
 app.use('/auth', authRoute)
