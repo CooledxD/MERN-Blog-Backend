@@ -1,6 +1,13 @@
+import { unlink } from 'node:fs/promises'
+import { dirname } from 'node:path/win32'
+import { fileURLToPath } from 'url';
+
 import Post from '../models/postModel.js'
 import User from '../models/userModel.js'
 import Comment from '../models/commentModel.js'
+
+// Back __dirname
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 // Create Post
 export const createPost = async (req, res) => {
@@ -88,7 +95,7 @@ export const getUserPosts = async (req, res) => {
       })
     )
 
-    list.sort((a, b) => b.createdAt - a.createdAt)
+    list?.sort((a, b) => b.createdAt - a.createdAt)
 
     res.status(200).json(list)
   } catch (error) {
@@ -110,6 +117,9 @@ export const removePost = async (req, res) => {
         message: 'Такого поста не существует.'
       })
     }
+
+    /* eslint-disable-next-line security/detect-non-literal-fs-filename -- Safe as no value holds user input */
+    unlink(`${__dirname}/../uploads/${post.image}`)
 
     await User.findByIdAndUpdate(req.userId, {
       $pull: { posts: post._id }
