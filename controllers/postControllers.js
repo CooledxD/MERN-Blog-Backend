@@ -118,8 +118,10 @@ export const removePost = async (req, res) => {
       })
     }
 
-    /* eslint-disable-next-line security/detect-non-literal-fs-filename -- Safe as no value holds user input */
-    unlink(`${__dirname}/../uploads/${post.image}`)
+    if (post.image) {
+      /* eslint-disable-next-line security/detect-non-literal-fs-filename -- Safe as no value holds user input */
+      unlink(`${__dirname}/../uploads/${post.image}`)
+    }
 
     await User.findByIdAndUpdate(req.userId, {
       $pull: { posts: post._id }
