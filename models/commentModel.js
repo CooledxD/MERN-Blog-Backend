@@ -17,6 +17,10 @@ const CommentSchema = new mongoose.Schema(
     username: {
       type: String
     },
+    authorAvatar: {
+      type: String,
+      default: ''
+    }
   },
   {
     timestamps: true
