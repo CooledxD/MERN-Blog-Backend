@@ -8,7 +8,9 @@ import {
   getUserPosts, 
   removePost, 
   updatePost, 
-  getPostComments 
+  getPostComments, 
+  addUserLikePost,
+  removeUserLikePost
 } from "../controllers/postControllers.js";
 import { upload } from "../middleware/multer.js";
 
@@ -41,5 +43,13 @@ router.delete('/:id', checkAuth, removePost)
 // Get post comments
 // /posts/comments/:id
 router.get('/comments/:id', getPostComments)
+
+// Adding a user's like to a post
+// /posts/likes/:id
+router.put('/likes/:id', checkAuth, addUserLikePost)
+
+// Remove a user's like to a post
+// /posts/likes/:id
+router.delete('/likes/:id', checkAuth, removeUserLikePost)
 
 export default router

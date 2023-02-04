@@ -187,3 +187,45 @@ export const getPostComments = async (req, res) => {
     })
   }
 }
+
+// Adding a user's like to a post
+export const addUserLikePost = async (req, res) => {
+  try {
+    const { username } = req.body
+
+    await Post.findByIdAndUpdate(req.params.id, {
+      $push: { likes: username }
+    })
+
+    res.status(204).json({
+      message: 'successes'
+    })
+  } catch (error) {
+    console.log(error)
+
+    res.status(500).json({
+      message: 'Что то пошло не так.',
+    })
+  }
+}
+
+// Remove a user's like to a post
+export const removeUserLikePost = async (req, res) => {
+  try {
+    const { username } = req.body
+
+    await Post.findByIdAndUpdate(req.params.id, {
+      $pull: { likes: username }
+    })
+
+    res.status(204).json({
+      message: 'successes'
+    })
+  } catch (error) {
+    console.log(error)
+
+    res.status(500).json({
+      message: 'Что то пошло не так.',
+    })
+  }
+}
