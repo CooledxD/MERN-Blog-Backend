@@ -8,6 +8,7 @@ import compression from 'compression'
 import authRoute from './routes/authRoutes.js'
 import postRoute from './routes/postsRoutes.js'
 import commentRoute from './routes/commentsRoutes.js'
+import userRoute from './routes/userRoutes.js'
 
 // env config
 dotenv.config()
@@ -27,6 +28,7 @@ app.use(compression())
 app.use('/auth', authRoute)
 app.use('/posts', postRoute)
 app.use('/comments', commentRoute)
+app.use('/user', userRoute)
 
 // Connect DB
 async function dbConnect() {
