@@ -88,7 +88,7 @@ export const login = async (req, res) => {
       }
     )
 
-    res.json({
+    res.status(200).json({
       user: {
         username: isUsedLogin.username,
         avatar: isUsedLogin.avatar,
@@ -127,7 +127,7 @@ export const getMe = async (req, res) => {
       }
     )
 
-    res.json({
+    res.status(200).json({
       user: {
         username: isValidId.username,
         avatar: isValidId.avatar,
