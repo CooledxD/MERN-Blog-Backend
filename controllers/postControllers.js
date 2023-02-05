@@ -95,7 +95,7 @@ export const getUserPosts = async (req, res) => {
       })
     )
 
-    list?.sort((a, b) => b.createdAt - a.createdAt)
+    list?.sort((a, b) => b?.createdAt - a?.createdAt)
 
     res.status(200).json(list)
   } catch (error) {
@@ -148,8 +148,17 @@ export const updatePost = async (req, res) => {
     const { id } = req.body
     const post = await Post.findById(id)
 
-    if(image) {
-      post.image = image
+    if (req.body.image) {
+      post.image = req.body.image
+    } else {
+      if (post.image) {
+        /* eslint-disable-next-line security/detect-non-literal-fs-filename -- Safe as no value holds user input */
+        unlink(`${__dirname}/../uploads/${post.image}`)
+      }
+
+      if(image) {
+        post.image = image
+      }
     }
 
     post.title = title
@@ -157,7 +166,7 @@ export const updatePost = async (req, res) => {
 
     await post.save()
 
-    res.status(204).json(post)
+    res.status(200).json(post)
   } catch (error) {
     console.log(error)
 
