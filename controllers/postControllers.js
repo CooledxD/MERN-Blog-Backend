@@ -75,6 +75,12 @@ export const getPostById = async (req, res) => {
       $inc: { views: 1 }
     })
 
+    if(!post) {
+      return res.status(404).json({
+        message: 'Такого поста не существует.'
+      })
+    }
+
     res.status(200).json(post)
   } catch (error) {
     console.log(error)
@@ -180,6 +186,12 @@ export const updatePost = async (req, res) => {
 export const getPostComments = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id)
+
+    if(!post) {
+      return res.status(404).json({
+        message: 'Такого поста не существует.'
+      })
+    }
 
     const list = await Promise.all(
       post.comments.map((comment) => {
