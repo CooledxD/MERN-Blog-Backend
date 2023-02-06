@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 
 export const checkAuth = (req, res, next) => {
-  const token = (req.headers.authorization).split(' ').pop().trim()
+  const token = (req.headers.authorization)?.split(' ').pop().trim()
 
   if(token) {
     try {
