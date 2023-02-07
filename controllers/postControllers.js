@@ -133,6 +133,11 @@ export const removePost = async (req, res) => {
       $pull: { posts: post._id }
     })
 
+    // Remove comments
+    post.comments.forEach( async (id) => {
+      await Comment.findByIdAndDelete(String(id))
+    })
+
     res.status(204).json({
       message: 'Пост был удален.'
     })
