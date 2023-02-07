@@ -3,6 +3,7 @@ import { dirname } from 'node:path/win32'
 import { fileURLToPath } from 'url';
 
 import User from '../models/userModel.js'
+import Post from '../models/postModel.js'
 
 // Back __dirname
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -30,6 +31,33 @@ export const updateAvatar = async(req, res) => {
 
     res.status(500).json({
       message: 'Что то пошло не так.',
+    })
+  }
+}
+
+export const getUser = async(req, res) => {
+  try {
+    const { userId } = req
+    const user = await User.findById(userId)
+
+    const posts = await Promise.all(
+      user.posts.map(post => {
+        return Post.findById(post._id)
+      })
+    )
+
+    res.status(200).json({
+      user: {
+        username: user.username,
+        avatar: user.avatar,
+        posts
+      }
+    })
+  } catch (error) {
+    console.log(error)
+
+    res.status(500).json({
+      message: 'Нет доступа.',
     })
   }
 }
