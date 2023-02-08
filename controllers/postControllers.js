@@ -138,6 +138,13 @@ export const removePost = async (req, res) => {
       await Comment.findByIdAndDelete(String(id))
     })
 
+    // Remove likes
+    post.likes.forEach( async (username) => {
+      await User.findOneAndUpdate({ username: username }, {
+        $pull: { likes: post._id }
+      })
+    })
+
     res.status(204).json({
       message: 'Пост был удален.'
     })
