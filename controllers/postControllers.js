@@ -218,9 +218,14 @@ export const getPostComments = async (req, res) => {
 export const addUserLikePost = async (req, res) => {
   try {
     const { username } = req.body
+    const { userId } = req
 
     await Post.findByIdAndUpdate(req.params.id, {
       $push: { likes: username }
+    })
+
+    await User.findByIdAndUpdate(userId, {
+      $push: { likes: req.params.id }
     })
 
     res.status(204).json({
@@ -239,9 +244,14 @@ export const addUserLikePost = async (req, res) => {
 export const removeUserLikePost = async (req, res) => {
   try {
     const { username } = req.body
+    const { userId } = req
 
     await Post.findByIdAndUpdate(req.params.id, {
       $pull: { likes: username }
+    })
+
+    await User.findByIdAndUpdate(userId, {
+      $pull: { likes: req.params.id }
     })
 
     res.status(204).json({

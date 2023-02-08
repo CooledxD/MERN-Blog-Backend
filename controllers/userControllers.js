@@ -43,7 +43,8 @@ export const getUser = async(req, res) => {
       user: {
         username: user.username,
         avatar: user.avatar,
-        posts: user.posts
+        posts: user.posts,
+        likes: user.likes
       }
     })
   } catch (error) {
