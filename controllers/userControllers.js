@@ -7,6 +7,7 @@ import User from '../models/userModel.js'
 // Back __dirname
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
+// Update user avatar
 export const updateAvatar = async(req, res) => {
   try {
     const { userId } = req
@@ -34,6 +35,7 @@ export const updateAvatar = async(req, res) => {
   }
 }
 
+// Getting user data
 export const getUser = async(req, res) => {
   try {
     const { userId } = req

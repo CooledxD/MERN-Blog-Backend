@@ -2,6 +2,7 @@ import Comment from "../models/commentModel.js";
 import Post from '../models/postModel.js'
 import User from "../models/userModel.js";
 
+// Create comment
 export const createComment = async (req, res) => {
   try {
     const { postId } = req.body
@@ -40,6 +41,7 @@ export const createComment = async (req, res) => {
   }
 }
 
+// Remove comment
 export const removeComment = async (req, res) => {
   try {
     const { postId } = req.body
