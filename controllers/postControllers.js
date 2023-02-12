@@ -11,12 +11,16 @@ const __dirname = fileURLToPath(new URL('.', import.meta.url))
 // Create Post
 export const createPost = async (req, res) => {
   try {
+    // Request
     const title = req.body.title.trim()
     const text = req.body.text.trim()
     const image = req.file ? req.file.filename : ''
     const { userId } = req
+
+    // Database
     const name = await User.findById(userId)
 
+    // Create post model
     const newPost = new Post({
       title,
       text,
@@ -25,8 +29,10 @@ export const createPost = async (req, res) => {
       username: name.username
     })
 
+    // Save model post in database
     await newPost.save()
 
+    // Adding the post id to the user's document
     await User.findByIdAndUpdate(userId, {
       $push: { posts: newPost }
     })
@@ -47,9 +53,11 @@ export const createPost = async (req, res) => {
 // Get All Posts
 export const getAllPosts = async (req, res) => {
   try {
+    // Database
     const posts = await Post.find().sort('-createdAt')
     const popularPosts = await Post.find().sort('-views').limit(5)
 
+    // Validation
     if(!posts) {
       return res.status(404).json({ message: 'Постов нет' })
     }
@@ -70,10 +78,12 @@ export const getAllPosts = async (req, res) => {
 // Get Post By Id
 export const getPostById = async (req, res) => {
   try {
+    // Database
     const post = await Post.findByIdAndUpdate(req.params.id, {
       $inc: { views: 1 }
     })
 
+    // Validation
     if(!post) {
       return res.status(404).json({
         message: 'Такого поста не существует.'
@@ -93,13 +103,17 @@ export const getPostById = async (req, res) => {
 // Get User Posts
 export const getUserPosts = async (req, res) => {
   try {
+    // Database
     const user = await User.findById(req.userId)
+
+    // Get user posts
     const list = await Promise.all(
       user.posts.map(post => {
         return Post.findById(post._id)
       })
     )
 
+    // Sorting posts by creation date
     list?.sort((a, b) => b?.createdAt - a?.createdAt)
 
     res.status(200).json(list)
@@ -115,8 +129,10 @@ export const getUserPosts = async (req, res) => {
 // Remove post
 export const removePost = async (req, res) => {
   try {
+    // Database
     const post = await Post.findByIdAndDelete(req.params.id)
 
+    // Validation
     if(!post) {
       return res.status(404).json({
         message: 'Такого поста не существует.'
@@ -128,6 +144,7 @@ export const removePost = async (req, res) => {
       unlink(`${__dirname}/../uploads/${post.image}`)
     }
 
+    // Deleting the post id from the user's document
     await User.findByIdAndUpdate(req.userId, {
       $pull: { posts: post._id }
     })
@@ -159,28 +176,37 @@ export const removePost = async (req, res) => {
 // Update Post
 export const updatePost = async (req, res) => {
   try {
+    // Request
     const title = req.body.title.trim()
     const text = req.body.text.trim()
     const image = req.file ? req.file.filename : ''
     const { id } = req.body
+
+    // Database
     const post = await Post.findById(id)
 
+    // Updating the image of the post
     if (req.body.image) {
+      // If the old image is preserved
       post.image = req.body.image
     } else {
+      // Otherwise we delete the old image
       if (post.image) {
         /* eslint-disable-next-line security/detect-non-literal-fs-filename -- Safe as no value holds user input */
         unlink(`${__dirname}/../uploads/${post.image}`)
       }
 
+      // If a new image is saved
       if(image) {
         post.image = image
       }
     }
 
+    // Adding new ones title and text
     post.title = title
     post.text = text
 
+    // Save post
     await post.save()
 
     res.status(200).json(post)
@@ -196,14 +222,17 @@ export const updatePost = async (req, res) => {
 // Get post comments
 export const getPostComments = async (req, res) => {
   try {
+    // Database
     const post = await Post.findById(req.params.id)
 
+    // Validation
     if(!post) {
       return res.status(404).json({
         message: 'Такого поста не существует.'
       })
     }
 
+    // We get all the comments to the post
     const list = await Promise.all(
       post.comments.map((comment) => {
         return Comment.findById(comment)
@@ -220,16 +249,19 @@ export const getPostComments = async (req, res) => {
   }
 }
 
-// Adding a user's like to a post
+// Adding user's like to post
 export const addUserLikePost = async (req, res) => {
   try {
+    // Request
     const { username } = req.body
     const { userId } = req
 
+    // Adding the username of the user to the likes field in the post document
     await Post.findByIdAndUpdate(req.params.id, {
       $push: { likes: username }
     })
 
+    // Adding the post id to the likes field in the user's document
     await User.findByIdAndUpdate(userId, {
       $push: { likes: req.params.id }
     })
@@ -246,16 +278,19 @@ export const addUserLikePost = async (req, res) => {
   }
 }
 
-// Remove a user's like to a post
+// Remove user's like to post
 export const removeUserLikePost = async (req, res) => {
   try {
+    // Request
     const { username } = req.body
     const { userId } = req
 
+    // Removing the user name of the user from the likes field in the post document
     await Post.findByIdAndUpdate(req.params.id, {
       $pull: { likes: username }
     })
 
+    // Removing the post id from the likes field in the user's document
     await User.findByIdAndUpdate(userId, {
       $pull: { likes: req.params.id }
     })

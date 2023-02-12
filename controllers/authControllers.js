@@ -6,13 +6,17 @@ import User from '../models/userModel.js'
 // Register
 export const register = async (req, res) => {
   try {
+    // Request
     const username = req.body.username.trim()
     const password = req.body.password.trim()
     const { email } = req.body
     const { avatar } = req.body
+
+    // Database
     const isUsedEmail = await User.findOne({ email })
     const isUsedLogin = await User.findOne({ username })
 
+    // Validation
     if (isUsedLogin) {
       return res.status(409).json({
         message: 'Данный логин уже существует.'
@@ -25,8 +29,10 @@ export const register = async (req, res) => {
       })
     }
 
+    // Create password hash
     const hash = bcrypt.hashSync(password, 10)
 
+    // Create user model
     const newUser = new User({
       username,
       password: hash,
@@ -34,6 +40,7 @@ export const register = async (req, res) => {
       avatar
     })
 
+    // Create token
     const token = jwt.sign(
       {
         id: newUser._id
@@ -44,6 +51,7 @@ export const register = async (req, res) => {
       }
     )
 
+    // Save model user in database
     await newUser.save()
 
     res.status(201).json({
@@ -62,9 +70,14 @@ export const register = async (req, res) => {
 // Login
 export const login = async (req, res) => {
   try {
+    // Request
     const { username } = req.body
     const { password } = req.body
+
+    // Database
     const isUsedLogin = await User.findOne({ username })
+
+    // Validation
     const isValidPass = await bcrypt.compare(password, isUsedLogin.password)
 
     if (!isUsedLogin || !isValidPass) {
@@ -73,6 +86,7 @@ export const login = async (req, res) => {
       });
     }
 
+    // Create token
     const token = jwt.sign(
       {
         id: isUsedLogin._id
@@ -99,14 +113,17 @@ export const login = async (req, res) => {
 // Get me
 export const getMe = async (req, res) => {
   try {
+    // Databse
     const isValidId = await User.findById(req.userId)
 
+    // Validation
     if (!isValidId) {
       return res.status(404).json({
         message: 'Пользователь не найден',
       });
     }
 
+    // Create token
     const token = jwt.sign(
       {
         id: isValidId._id
