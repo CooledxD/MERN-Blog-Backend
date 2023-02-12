@@ -7,10 +7,31 @@
 
 My backend implementation for a blog on the MERN stack.
 
-## 🛠️ Technologies & Tools
+## 🛠️ Implemented
 
-* MongoDB
-* Express.js
+### Auth
+* Registration
+* Login
+* Renew
+
+### Comments
+* Create
+* Remove
+
+### Posts
+* Create
+* Get all
+* Get post by id
+* Get user posts
+* Remove
+* Update
+* Get comments
+* Add like
+* Remove like
+
+### Users
+* Update avatar
+* Get data
 
 ## 📖 Style guide
 
@@ -22,18 +43,11 @@ My backend implementation for a blog on the MERN stack.
 ## 📂 Structure project
 
 ```
-src/
+project/
  |--controllers/
- |   |--
- |   |--
- |   |--
- |   |--
- |   |--
- |   |--
- |
+ |--middleware/
  |--models/
+ |--routes/
+ |--uploads/
  |--utils/
- |--layout/
-     |--
-     |--
 ```
