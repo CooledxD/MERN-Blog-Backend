@@ -1,11 +1,10 @@
 import { unlink } from 'node:fs/promises'
-import { dirname } from 'node:path/win32'
 import { fileURLToPath } from 'url';
 
 import User from '../models/userModel.js'
 
 // Back __dirname
-const __dirname = dirname(fileURLToPath(import.meta.url))
+const __dirname = fileURLToPath(new URL('.', import.meta.url))
 
 // Update user avatar
 export const updateAvatar = async(req, res) => {

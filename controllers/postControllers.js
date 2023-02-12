@@ -1,5 +1,4 @@
 import { unlink } from 'node:fs/promises'
-import { dirname } from 'node:path/win32'
 import { fileURLToPath } from 'url';
 
 import Post from '../models/postModel.js'
@@ -7,7 +6,7 @@ import User from '../models/userModel.js'
 import Comment from '../models/commentModel.js'
 
 // Back __dirname
-const __dirname = dirname(fileURLToPath(import.meta.url))
+const __dirname = fileURLToPath(new URL('.', import.meta.url))
 
 // Create Post
 export const createPost = async (req, res) => {
