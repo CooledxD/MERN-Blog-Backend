@@ -1,17 +1,17 @@
 import { Router } from "express";
 
-import { checkAuth } from "../middleware/checkAuth.js";
+import { verifyAccessToken } from "../middleware/verifyAccessToken.js";
 import { createComment, removeComment } from '../controllers/commentsControllers.js'
 
 const router = new Router()
 
 // Create comment
 // /comments/:id
-router.post('/:id', checkAuth, createComment)
+router.post('/:id', verifyAccessToken, createComment)
 
 // Remove comment
 // /comments/:id
-router.delete('/:id', checkAuth, removeComment)
+router.delete('/:id', verifyAccessToken, removeComment)
 
 // // Update comment
 // router.put('/:id', checkAuth, createComment)

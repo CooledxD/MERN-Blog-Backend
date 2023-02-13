@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 import { register, login, getMe } from '../controllers/authControllers.js'
-import { checkAuth } from "../middleware/checkAuth.js";
+import { verifyAccessToken } from "../middleware/verifyAccessToken.js";
 
 const router = new Router()
 
@@ -15,6 +15,6 @@ router.post('/login', login)
 
 // Get me
 // /auth/me
-router.get('/me', checkAuth, getMe)
+router.get('/me', verifyAccessToken, getMe)
 
 export default router
