@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 import cors from 'cors'
 import helmet from 'helmet'
 import compression from 'compression'
+import cookieParser from 'cookie-parser'
 
 import authRoute from './routes/authRoutes.js'
 import postRoute from './routes/postsRoutes.js'
@@ -17,7 +18,11 @@ dotenv.config()
 const app = express()
 
 // Middleware
-app.use(cors())
+app.use(cors({
+  credentials: true,
+  origin: true
+}))
+app.use(cookieParser())
 app.use(express.static('uploads'))
 app.use(express.json())
 app.use(helmet())

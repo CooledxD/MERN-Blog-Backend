@@ -1,7 +1,12 @@
 import { Router } from "express";
 
-import { register, login, getMe } from '../controllers/authControllers.js'
-import { verifyAccessToken } from "../middleware/verifyAccessToken.js";
+import { 
+  register, 
+  login, 
+  activateAccount,  
+  renewAccessToken, 
+  logout 
+} from '../controllers/authControllers.js'
 
 const router = new Router()
 
@@ -13,8 +18,16 @@ router.post('/register', register)
 // /auth/login
 router.post('/login', login)
 
-// Get me
-// /auth/me
-router.get('/me', verifyAccessToken, getMe)
+// Activate account
+// /auth/activate-account
+router.post('/activate-account', activateAccount)
+
+// Renew access token
+// /auth/renew-access-token
+router.post('/renew-access-token', renewAccessToken)
+
+// Logout
+// /auth/logout
+router.get('/logout', logout)
 
 export default router
