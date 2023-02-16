@@ -17,7 +17,7 @@ export const createComment = async (req, res) => {
     // Validation
     if (!comment) {
       return res.status(400).json({
-        message: 'Комментарий не может быть пустым.'
+        message: 'The comment cannot be empty'
       })
     }
 
@@ -43,7 +43,7 @@ export const createComment = async (req, res) => {
     console.log(error)
 
     res.status(500).json({
-      message: 'Что то пошло не так.',
+      message: 'Something went wrong',
     })
   }
 }
@@ -61,7 +61,7 @@ export const removeComment = async (req, res) => {
     // Validation
     if(!comment) {
       return res.status(404).json({
-        message: 'Такого поста не существует.'
+        message: 'There is no such post'
       })
     }
 
@@ -71,13 +71,13 @@ export const removeComment = async (req, res) => {
     })
 
     res.status(204).json({
-      message: 'Комментарий был удален.'
+      message: 'The comment has been deleted'
     })
   } catch (error) {
     console.log(error)
 
     res.status(500).json({
-      message: 'Что то пошло не так.',
+      message: 'Something went wrong',
     })
   }
 }

@@ -39,13 +39,13 @@ export const createPost = async (req, res) => {
 
     res.status(201).json({
       newPost,
-      message: 'Статья успешно создана.'
+      message: 'The article was successfully created'
     })
   } catch (error) {
     console.log(error)
 
     res.status(500).json({
-      message: 'Не удалось создать статью',
+      message: 'Failed to create an article',
     })
   }
 }
@@ -59,7 +59,9 @@ export const getAllPosts = async (req, res) => {
 
     // Validation
     if(!posts) {
-      return res.status(404).json({ message: 'Постов нет' })
+      return res.status(404).json({ 
+        message: 'There are no posts'
+      })
     }
 
     res.status(200).json({
@@ -70,7 +72,7 @@ export const getAllPosts = async (req, res) => {
     console.log(error)
 
     res.status(500).json({
-      message: 'Что то пошло не так.'
+      message: 'Something went wrong'
     })
   }
 }
@@ -86,7 +88,7 @@ export const getPostById = async (req, res) => {
     // Validation
     if(!post) {
       return res.status(404).json({
-        message: 'Такого поста не существует.'
+        message: 'There is no such post'
       })
     }
 
@@ -95,7 +97,7 @@ export const getPostById = async (req, res) => {
     console.log(error)
 
     res.status(500).json({
-      message: 'Что то пошло не так.'
+      message: 'Something went wrong'
     })
   }
 }
@@ -121,7 +123,7 @@ export const getUserPosts = async (req, res) => {
     console.log(error)
 
     res.status(500).json({
-      message: 'Что то пошло не так.',
+      message: 'Something went wrong',
     })
   } 
 }
@@ -135,7 +137,7 @@ export const removePost = async (req, res) => {
     // Validation
     if(!post) {
       return res.status(404).json({
-        message: 'Такого поста не существует.'
+        message: 'There is no such post'
       })
     }
 
@@ -162,13 +164,13 @@ export const removePost = async (req, res) => {
     })
 
     res.status(204).json({
-      message: 'Пост был удален.'
+      message: 'The post has been deleted'
     })
   } catch (error) {
     console.log(error)
 
     res.status(500).json({
-      message: 'Что то пошло не так.',
+      message: 'Something went wrong',
     })
   }
 }
@@ -214,7 +216,7 @@ export const updatePost = async (req, res) => {
     console.log(error)
 
     res.status(500).json({
-      message: 'Что то пошло не так.',
+      message: 'Something went wrong',
     })
   }
 }
@@ -228,7 +230,7 @@ export const getPostComments = async (req, res) => {
     // Validation
     if(!post) {
       return res.status(404).json({
-        message: 'Такого поста не существует.'
+        message: 'There is no such post'
       })
     }
 
@@ -244,7 +246,7 @@ export const getPostComments = async (req, res) => {
     console.log(error)
 
     res.status(500).json({
-      message: 'Что то пошло не так.',
+      message: 'Something went wrong',
     })
   }
 }
@@ -267,13 +269,13 @@ export const addUserLikePost = async (req, res) => {
     })
 
     res.status(204).json({
-      message: 'successes'
+      message: 'success'
     })
   } catch (error) {
     console.log(error)
 
     res.status(500).json({
-      message: 'Что то пошло не так.',
+      message: 'Something went wrong',
     })
   }
 }
@@ -296,13 +298,13 @@ export const removeUserLikePost = async (req, res) => {
     })
 
     res.status(204).json({
-      message: 'successes'
+      message: 'success'
     })
   } catch (error) {
     console.log(error)
 
     res.status(500).json({
-      message: 'Что то пошло не так.',
+      message: 'Something went wrong',
     })
   }
 }

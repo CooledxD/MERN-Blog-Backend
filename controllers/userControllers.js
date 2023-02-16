@@ -35,7 +35,7 @@ export const updateAvatar = async(req, res) => {
     console.log(error)
 
     res.status(500).json({
-      message: 'Что то пошло не так.',
+      message: 'Something went wrong',
     })
   }
 }
@@ -61,7 +61,7 @@ export const getUser = async(req, res) => {
     console.log(error)
 
     res.status(500).json({
-      message: 'Нет доступа.',
+      message: 'No access',
     })
   }
 }
