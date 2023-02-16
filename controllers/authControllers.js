@@ -88,6 +88,15 @@ export const activateAccount = async (req, res) => {
     // Validation token
     const newUserData = jwt.verify(activationToken, process.env.JWT_ACTIVATION_SECRET)
 
+    // Validation
+    const isUsedEmail = await User.findOne({ email: newUserData.email })
+
+    if (isUsedEmail) {
+      return res.status(400).json({
+        message: 'This email already exists'
+      })
+    }
+
     // Create user model
     const newUser = new User({
       username: newUserData.username,
