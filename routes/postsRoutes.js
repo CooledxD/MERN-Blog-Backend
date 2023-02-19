@@ -21,38 +21,64 @@ const router = new Router()
 
 // Create Post
 // /posts/
-router.post('/', upload, verifyAccessToken, createPost)
+router.post('/', 
+  upload, 
+  verifyAccessToken, 
+  createPost
+)
 
 // Get All Posts
 // /posts/
-router.get('/', getAllPosts)
+router.get('/', 
+  getAllPosts
+)
 
 // Get User Posts
 // /posts/user
-router.get('/user', verifyAccessToken, getUserPosts)
+router.get('/user', 
+  verifyAccessToken, 
+  getUserPosts
+)
 
 // Get Post By Id
 // /posts/:id
-router.get('/:id', getPostById)
+router.get('/:id', 
+  getPostById
+)
 
 // Update Post
 // /posts/:id
-router.put('/:id', upload, verifyAccessToken, updatePost)
+router.put('/:id', 
+  upload, 
+  verifyAccessToken, 
+  updatePost
+)
 
 // Remove post
 // /posts/:id
-router.delete('/:id', verifyAccessToken, removePost)
+router.delete('/:id', 
+  verifyAccessToken, 
+  removePost
+)
 
 // Get post comments
 // /posts/comments/:id
-router.get('/comments/:id', getPostComments)
+router.get('/comments/:id', 
+  getPostComments
+)
 
 // Adding a user's like to a post
 // /posts/likes/:id
-router.put('/likes/:id', verifyAccessToken, addUserLikePost)
+router.put('/likes/:id', 
+  verifyAccessToken, 
+  addUserLikePost
+)
 
 // Remove a user's like to a post
 // /posts/likes/:id
-router.delete('/likes/:id', verifyAccessToken, removeUserLikePost)
+router.delete('/likes/:id', 
+  verifyAccessToken, 
+  removeUserLikePost
+)
 
 export default router

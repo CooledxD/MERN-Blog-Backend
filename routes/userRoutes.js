@@ -11,10 +11,17 @@ const router = new Router()
 
 // Update avatar
 // /user/avatar
-router.put('/avatar', upload, verifyAccessToken, updateAvatar)
+router.put('/avatar', 
+  upload, 
+  verifyAccessToken, 
+  updateAvatar
+)
 
 // Get user info
 // /user/get
-router.get('/get', verifyAccessToken, getUser)
+router.get('/get', 
+  verifyAccessToken, 
+  getUser
+)
 
 export default router

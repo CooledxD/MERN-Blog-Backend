@@ -13,11 +13,19 @@ const router = new Router()
 
 // Create comment
 // /comments/
-router.post('/', verifyAccessToken, validationCreateComment, createComment)
+router.post('/', 
+  verifyAccessToken, 
+  validationCreateComment, 
+  createComment
+)
 
 // Remove comment
 // /comments/
-router.delete('/', verifyAccessToken, validationRemoveComment, removeComment)
+router.delete('/', 
+  verifyAccessToken, 
+  validationRemoveComment, 
+  removeComment
+)
 
 // // Update comment
 // router.put('/:id', checkAuth, createComment)
