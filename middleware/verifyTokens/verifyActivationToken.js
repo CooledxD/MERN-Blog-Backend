@@ -10,17 +10,13 @@ const activationTokenSchema = Joi.object({
 export const verifyActivationToken = async (req, res, next) => {
   try {
     // validation of the request body
-    const { error } = await activationTokenSchema.validateAsync(req.body, {
+    await activationTokenSchema.validateAsync(req.body, {
       errors: {
         wrap: {
           label: false
         }
       }
     })
-
-    if (error) {
-      throw new Error(error.message)
-    }
 
     // token validation
     const newUserData = jwt.verify(

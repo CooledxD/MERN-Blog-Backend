@@ -38,17 +38,13 @@ const registrationSchema = Joi.object({
 export const validationRegistration = async (req, res, next) => {
   try {
     // validation of the request body
-    const { error } = await registrationSchema.validateAsync(req.body, {
+    await registrationSchema.validateAsync(req.body, {
       errors: {
         wrap: {
           label: false
         }
       }
     })
-
-    if (error) {
-      throw new Error(error.message)
-    }
 
     // checking the username reservation
     const isUsedLogin = await User.findOne({ username: req.body.username })
