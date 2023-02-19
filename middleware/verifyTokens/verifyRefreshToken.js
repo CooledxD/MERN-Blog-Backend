@@ -10,13 +10,7 @@ const refreshTokenSchema = Joi.object({
 export const verifyRefreshToken = async (req, res, next) => {
   try {
     // validation of the request body
-    await refreshTokenSchema.validateAsync(req.cookies, {
-      errors: {
-        wrap: {
-          label: false
-        }
-      }
-    })
+    await refreshTokenSchema.validateAsync(req.cookies)
 
     // token validation
     const tokenData = jwt.verify(

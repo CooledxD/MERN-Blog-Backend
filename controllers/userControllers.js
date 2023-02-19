@@ -47,21 +47,21 @@ export const getUser = async(req, res) => {
     const { userId } = req
 
     // Database
-    const user = await User.findById(userId)
+    const { username, avatar, posts, likes } = await User.findById(userId)
 
     res.status(200).json({
       user: {
-        username: user.username,
-        avatar: user.avatar,
-        posts: user.posts,
-        likes: user.likes
+        username,
+        avatar,
+        posts,
+        likes
       }
     })
   } catch (error) {
     console.log(error)
 
     res.status(500).json({
-      message: 'No access',
+      message: 'Something went wrong',
     })
   }
 }

@@ -1,29 +1,27 @@
 import jwt from 'jsonwebtoken'
+import Joi from 'joi'
 
-export const verifyAccessToken = (req, res, next) => {
+export const verifyAccessToken = async (req, res, next) => {
   try {
-    // Request
-    const token = req.headers.authorization
-
-    // Validation
-    if (!token) {
-      return res.status(400).json({
-        message: 'Token not found'
-      })
-    }
+    // Validation token
+    Joi.assert(
+      req.headers.authorization, 
+      Joi.string().required()
+    )
 
     // Decoded token
-    const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET)
+    const tokenData = jwt.verify(
+      req.headers.authorization, 
+      process.env.JWT_ACCESS_SECRET
+    )
 
     // Putting the data from the token in the request
-    req.userId = decoded.id
+    req.userId = tokenData.id
 
     next()
   } catch (error) {
-    console.log(error)
-
-    res.status(403).json({
-      message: 'There is no access'
+    res.status(400).json({
+      message: 'Access token not valid'
     })
   }
 }
