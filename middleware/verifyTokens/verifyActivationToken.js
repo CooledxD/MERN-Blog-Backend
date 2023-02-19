@@ -24,7 +24,7 @@ export const verifyActivationToken = async (req, res, next) => {
       process.env.JWT_ACTIVATION_SECRET
     )
 
-    // we pass the data from the token to the request body
+    // passing data from the token to the request body
     req.body = newUserData
 
     next()
