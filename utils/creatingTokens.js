@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'
 
+// Create activation token
 export const createActivationToken = (payload) => {
   return jwt.sign(
     payload,
@@ -10,6 +11,7 @@ export const createActivationToken = (payload) => {
   )
 }
 
+// Create access token
 export const createAccessToken = (payload) => {
   return jwt.sign(
     payload,
@@ -20,6 +22,7 @@ export const createAccessToken = (payload) => {
   )
 }
 
+// Create refresh token
 export const createRefreshToken = (payload) => {
   return jwt.sign(
     payload,
