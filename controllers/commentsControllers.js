@@ -6,20 +6,11 @@ import User from "../models/userModel.js";
 export const createComment = async (req, res) => {
   try {
     // Request
-    const { postId } = req.body
-    const { authorAvatar } = req.body
-    const comment = req.body.comment.trim()
+    const { postId, authorAvatar, comment } = req.body
     const { userId } = req
 
-    // Databse
+    // Database
     const { username } = await User.findById(userId)
-
-    // Validation
-    if (!comment) {
-      return res.status(400).json({
-        message: 'The comment cannot be empty'
-      })
-    }
 
     // Create comment model
     const newComment = new Comment({
@@ -30,7 +21,7 @@ export const createComment = async (req, res) => {
       authorAvatar
     })
 
-    // Save model user in database
+    // Save model comment in database
     await newComment.save()
 
     // Adding the comment id to the post document
@@ -38,7 +29,9 @@ export const createComment = async (req, res) => {
       $push: { comments: newComment._id }
     })
 
-    res.status(201).json(newComment)
+    res.status(201).json({
+      message: 'Comment created'
+    })
   } catch (error) {
     console.log(error)
 
@@ -52,25 +45,17 @@ export const createComment = async (req, res) => {
 export const removeComment = async (req, res) => {
   try {
     // Request
-    const { postId } = req.body
-    const { commentId } = req.body
+    const { postId, commentId } = req.body
 
-    // Database
-    const comment = await Comment.findByIdAndDelete(commentId)
-
-    // Validation
-    if(!comment) {
-      return res.status(404).json({
-        message: 'There is no such post'
-      })
-    }
+    // Remove comment
+    await Comment.findByIdAndDelete(commentId)
 
     // Deleting the comment id from the post document.
     await Post.findByIdAndUpdate(postId, {
       $pull: { comments: commentId }
     })
 
-    res.status(204).json({
+    res.status(200).json({
       message: 'The comment has been deleted'
     })
   } catch (error) {
