@@ -67,22 +67,11 @@ export const activateAccount = async (req, res) => {
 // Login
 export const login = async (req, res) => {
   try {
-    // Request
-    const { username } = req.body
-    const { password } = req.body
-
-    // Validation
-    const isUsedLogin = await User.findOne({ username })
-    const isValidPass = await bcrypt.compare(password, isUsedLogin.password)
-
-    if (!isUsedLogin || !isValidPass) {
-      return res.status(400).json({
-        message: 'Invalid username or password',
-      });
-    }
+    // Request body
+    const { user } = req.body
 
     // Create token
-    const refreshToken = createRefreshToken({ id: isUsedLogin._id })
+    const refreshToken = createRefreshToken({ id: user._id })
 
     // Adding cookies in response
     res.cookie('refreshToken', refreshToken, {

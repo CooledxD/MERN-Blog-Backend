@@ -4,6 +4,7 @@ import { Router } from "express";
 import { validationRegistration } from '../middleware/validation/validationRegistration.js'
 import { validationActivationAccount } from '../middleware/validation/validationActivationAccount.js'
 import { verifyActivationToken } from "../middleware/verifyTokens/verifyActivationToken.js";
+import { velidationLogin } from '../middleware/validation/validationLogin.js'
 
 // Controllers
 import { 
@@ -20,13 +21,13 @@ const router = new Router()
 // /auth/register
 router.post('/register', validationRegistration, register)
 
-// Login
-// /auth/login
-router.post('/login', login)
-
 // Activate account
 // /auth/activate-account
 router.post('/activate-account', verifyActivationToken, validationActivationAccount, activateAccount)
+
+// Login
+// /auth/login
+router.post('/login', velidationLogin, login)
 
 // Renew access token
 // /auth/renew-access-token
