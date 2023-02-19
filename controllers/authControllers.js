@@ -1,5 +1,4 @@
 import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
 
 import { sendActivationEmail } from '../utils/sendEmail.js'
 import { createActivationToken, createAccessToken, createRefreshToken } from '../utils/creatingTokens.js'
@@ -59,7 +58,7 @@ export const activateAccount = async (req, res) => {
     console.log(error)
 
     res.status(500).json({
-      message: 'Wrong credentials'
+      message: 'Something went wrong'
     })
   }
 }
@@ -86,7 +85,7 @@ export const login = async (req, res) => {
     console.log(error)
 
     res.status(500).json({
-      message: 'Authorization error'
+      message: 'Something went wrong'
     })
   }
 }
@@ -94,21 +93,10 @@ export const login = async (req, res) => {
 // Renew access token
 export const renewAccessToken = async (req, res) => {
   try {
-    // Request
-    const refreshToken = req.cookies ? req.cookies.refreshToken : ''
-
-    // Validation
-    if (!refreshToken) {
-      return res.status(400).json({
-        message: 'Refresh token not found'
-      })
-    }
-
-    // Validatiopn token
-    const user = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET)
+    const { tokenData } = req.body
 
     // Create access token
-    const accessToken = createAccessToken({ id: user.id })
+    const accessToken = createAccessToken({ id: tokenData.id })
 
     res.status(200).json({
       accessToken
@@ -117,7 +105,7 @@ export const renewAccessToken = async (req, res) => {
     console.log(error)
 
     res.status(500).json({
-      message: 'Refresh token not valid'
+      message: 'Something went wrong'
     })
   }
 }
