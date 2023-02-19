@@ -1,6 +1,9 @@
 import { Router } from "express";
 
-import { verifyAccessToken } from "../middleware/verifyAccessToken.js";
+// Middleware
+import { verifyAccessToken } from "../middleware/verifyTokens/verifyAccessToken.js";
+
+// Controllers
 import { createComment, removeComment } from '../controllers/commentsControllers.js'
 
 const router = new Router()

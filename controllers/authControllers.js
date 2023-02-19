@@ -9,63 +9,24 @@ import User from '../models/userModel.js'
 // Register
 export const register = async (req, res) => {
   try {
-    // Request
-    const username = req.body.username.trim()
-    const password = req.body.password.trim()
-    const { email } = req.body
-
-    // Validation
-    if (!username || !password || !email) {
-      return res.status(400).json({
-        message: 'Please fill all the fields'
-      })
-    }
-
-    if (password.length < 8) {
-      return res.status(400).json({
-        message: 'Password length must be atleast 8 characters'
-      })
-    }
-
-    if (!email) {
-      return res.status(400).json({
-        message: 'Invalid email'
-      })
-    }
-
-    const isUsedEmail = await User.findOne({ email })
-    const isUsedLogin = await User.findOne({ username })
-
-    if (isUsedLogin) {
-      return res.status(409).json({
-        message: 'This login is already in use'
-      })
-    }
-
-    if (isUsedEmail) {
-      return res.status(409).json({
-        message: 'This email is already in use'
-      })
-    }
+    // Request body
+    const { username, password, email } = req.body
 
     // Create password hash
     const hashPassword = await bcrypt.hash(password, 8)
 
-    // Create user model
-    const newUser = {
+    // Create activation token
+    const activationToken = createActivationToken({
       username,
       password: hashPassword,
       email
-    }
-
-    // Create activation token
-    const activationToken = createActivationToken(newUser)
+    })
 
     // Creating a URL to send an email with account activation
     const url = `${process.env.CLIENT_URL}/auth/activate-account/${activationToken}`
 
     // Creating and sending an account activation email
-    await sendActivationEmail({email, url})
+    sendActivationEmail({email, url})
 
     res.status(200).json({
       message: 'Please click on the activation link we sent to your email to complete your registration'
@@ -82,30 +43,14 @@ export const register = async (req, res) => {
 // Activation account
 export const activateAccount = async (req, res) => {
   try {
-    // Request
-    const { activationToken } = req.body
-
-    // Validation token
-    const newUserData = jwt.verify(activationToken, process.env.JWT_ACTIVATION_SECRET)
-
-    // Validation
-    const isUsedEmail = await User.findOne({ email: newUserData.email })
-
-    if (isUsedEmail) {
-      return res.status(400).json({
-        message: 'This email already exists'
-      })
-    }
-
-    // Create user model
-    const newUser = new User({
-      username: newUserData.username,
-      password: newUserData.password,
-      email: newUserData.email
-    })
+    const { username, password, email } = req.body
 
     // Save model user in database
-    await newUser.save()
+    await User.create({
+      username,
+      password,
+      email
+    })
 
     res.status(201).json({
       message: 'Account has been activated'
@@ -113,7 +58,7 @@ export const activateAccount = async (req, res) => {
   } catch (error) {
     console.log(error)
 
-    res.status(400).json({
+    res.status(500).json({
       message: 'Wrong credentials'
     })
   }

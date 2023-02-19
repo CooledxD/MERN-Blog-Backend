@@ -1,8 +1,11 @@
 import { Router } from "express";
 
-import { verifyAccessToken } from "../middleware/verifyAccessToken.js";
-import { updateAvatar, getUser } from '../controllers/userControllers.js'
+// Middleware
+import { verifyAccessToken } from "../middleware/verifyTokens/verifyAccessToken.js";
 import { upload } from "../middleware/multer.js";
+
+// Controllers
+import { updateAvatar, getUser } from '../controllers/userControllers.js'
 
 const router = new Router()
 

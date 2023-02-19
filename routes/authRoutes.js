@@ -1,5 +1,11 @@
 import { Router } from "express";
 
+// Middleware
+import { validationRegistration } from '../middleware/validation/validationRegistration.js'
+import { validationActivationAccount } from '../middleware/validation/validationActivationAccount.js'
+import { verifyActivationToken } from "../middleware/verifyTokens/verifyActivationToken.js";
+
+// Controllers
 import { 
   register, 
   login, 
@@ -12,7 +18,7 @@ const router = new Router()
 
 // Register
 // /auth/register
-router.post('/register', register)
+router.post('/register', validationRegistration, register)
 
 // Login
 // /auth/login
@@ -20,7 +26,7 @@ router.post('/login', login)
 
 // Activate account
 // /auth/activate-account
-router.post('/activate-account', activateAccount)
+router.post('/activate-account', verifyActivationToken, validationActivationAccount, activateAccount)
 
 // Renew access token
 // /auth/renew-access-token

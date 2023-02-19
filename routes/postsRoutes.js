@@ -1,6 +1,10 @@
 import { Router } from "express";
 
-import { verifyAccessToken } from '../middleware/verifyAccessToken.js'
+// Middleware
+import { verifyAccessToken } from "../middleware/verifyTokens/verifyAccessToken.js";
+import { upload } from "../middleware/multer.js";
+
+// Controllers
 import { 
   createPost, 
   getAllPosts, 
@@ -12,7 +16,6 @@ import {
   addUserLikePost,
   removeUserLikePost
 } from "../controllers/postControllers.js";
-import { upload } from "../middleware/multer.js";
 
 const router = new Router()
 
