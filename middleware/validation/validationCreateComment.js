@@ -2,7 +2,11 @@ import Joi from "joi";
 
 const createCommentSchema = Joi.object({
   postId: Joi.string()
-    .required(),
+    .pattern(/^[a-z0-9]+$/)
+    .required()
+    .messages({
+      'string.pattern.base': 'incorrect syntax'
+    }),
 
   authorAvatar: Joi.string()
     .empty(''),

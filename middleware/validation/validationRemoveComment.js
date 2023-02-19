@@ -4,10 +4,18 @@ import Comment from '../../models/commentModel.js'
 
 const removeCommentSchema = Joi.object({
   postId: Joi.string()
-    .required(),
+    .pattern(/^[a-z0-9]+$/)
+    .required()
+    .messages({
+      'string.pattern.base': 'incorrect syntax'
+    }),
 
   commentId: Joi.string()
+    .pattern(/^[a-z0-9]+$/)
     .required()
+    .messages({
+      'string.pattern.base': 'incorrect syntax'
+    })
 })
 
 export const validationRemoveComment = async (req, res, next) => {
