@@ -2,16 +2,18 @@ import nodemailer from 'nodemailer'
 
 export const sendActivationEmail = async ({email, url}) => {
   try {
+    // create reusable transporter object using the default SMTP transport
     const transporter = nodemailer.createTransport({
-      host: 'smtp.ethereal.email',
+      host: process.env.MAIL_SERVICE_HOST,
       port: 587,
       secure: false,
       auth: {
         user: process.env.MAIL_SERVICE_EMAIL,
-        pass: process.env.MAIL_PASSWORD
+        pass: process.env.MAIL_SERVICE_PASSWORD
       }
     })
 
+    // send mail with defined transport object
     const info = await transporter.sendMail({
       from: process.env.MAIL_SERVICE_EMAIL,
       to: email,
