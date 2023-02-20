@@ -5,6 +5,7 @@ import { verifyAccessToken } from "../middleware/verifyTokens/verifyAccessToken.
 
 import { validationCreatePost } from "../middleware/validation/validationCreatePost.js";
 import { validationRemovePost } from "../middleware/validation/validationRemovePost.js";
+import { validationUpdatePost } from "../middleware/validation/validationUpdatePost.js";
 
 import { upload } from "../middleware/multer.js";
 
@@ -40,6 +41,15 @@ router.delete('/:postId',
   removePost
 )
 
+// Update Post
+// /posts/:postId
+router.put('/:postId', 
+  verifyAccessToken,
+  upload,
+  validationUpdatePost,
+  updatePost
+)
+
 // Get All Posts
 // /posts/
 router.get('/', 
@@ -57,14 +67,6 @@ router.get('/user',
 // /posts/:id
 router.get('/:id', 
   getPostById
-)
-
-// Update Post
-// /posts/:id
-router.put('/:id', 
-  verifyAccessToken,
-  upload,
-  updatePost
 )
 
 // Get post comments

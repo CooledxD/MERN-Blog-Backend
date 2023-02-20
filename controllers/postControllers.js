@@ -93,13 +93,11 @@ export const removePost = async (req, res) => {
 export const updatePost = async (req, res) => {
   try {
     // Request
-    const title = req.body.title.trim()
-    const text = req.body.text.trim()
+    const { title, text } = req.body
     const image = req.file ? req.file.filename : ''
-    const { id } = req.body
 
     // Database
-    const post = await Post.findById(id)
+    const post = await Post.findById(req.params.postId)
 
     // Updating the image of the post
     if (req.body.image) {
