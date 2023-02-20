@@ -1,7 +1,20 @@
+import Joi from "joi";
+
 import Post from "../../models/postModel.js";
 
 export const validationRemovePost = async (req, res, next) => {
   try {
+    // validation postId
+    Joi.assert(
+      req.params.postId, 
+      Joi.string()
+        .pattern(/^[a-z0-9]+$/)
+        .required()
+        .messages({
+          'string.pattern.base': 'incorrect post id'
+        })
+    )
+
     // looking for a post in the database
     const post = await Post.findById(req.params.postId)
 
