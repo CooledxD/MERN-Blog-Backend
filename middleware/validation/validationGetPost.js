@@ -1,6 +1,6 @@
 import Joi from "joi";
 
-import Post from "../../models/postModel";
+import Post from "../../models/postModel.js";
 
 export const validationGetPost = async (req, res, next) => {
   try {
