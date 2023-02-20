@@ -53,14 +53,7 @@ export const createPost = async (req, res) => {
 export const removePost = async (req, res) => {
   try {
     // Database
-    const post = await Post.findByIdAndDelete(req.params.id)
-
-    // Validation
-    if(!post) {
-      return res.status(404).json({
-        message: 'There is no such post'
-      })
-    }
+    const post = await Post.findByIdAndDelete(req.params.postId)
 
     if (post.image) {
       /* eslint-disable-next-line security/detect-non-literal-fs-filename -- Safe as no value holds user input */
@@ -84,7 +77,7 @@ export const removePost = async (req, res) => {
       })
     })
 
-    res.status(204).json({
+    res.status(200).json({
       message: 'The post has been deleted'
     })
   } catch (error) {

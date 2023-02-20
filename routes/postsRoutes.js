@@ -4,6 +4,7 @@ import { Router } from "express";
 import { verifyAccessToken } from "../middleware/verifyTokens/verifyAccessToken.js";
 
 import { validationCreatePost } from "../middleware/validation/validationCreatePost.js";
+import { validationRemovePost } from "../middleware/validation/validationRemovePost.js";
 
 import { upload } from "../middleware/multer.js";
 
@@ -31,6 +32,14 @@ router.post('/',
   createPost
 )
 
+// Remove post
+// /posts/:postId
+router.delete('/:postId', 
+  verifyAccessToken,
+  validationRemovePost,
+  removePost
+)
+
 // Get All Posts
 // /posts/
 router.get('/', 
@@ -56,13 +65,6 @@ router.put('/:id',
   verifyAccessToken,
   upload,
   updatePost
-)
-
-// Remove post
-// /posts/:id
-router.delete('/:id', 
-  verifyAccessToken, 
-  removePost
 )
 
 // Get post comments
