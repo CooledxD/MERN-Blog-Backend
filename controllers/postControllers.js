@@ -137,16 +137,9 @@ export const updatePost = async (req, res) => {
 export const getPostById = async (req, res) => {
   try {
     // Database
-    const post = await Post.findByIdAndUpdate(req.params.id, {
+    const post = await Post.findByIdAndUpdate(req.params.postId, {
       $inc: { views: 1 }
     })
-
-    // Validation
-    if(!post) {
-      return res.status(404).json({
-        message: 'There is no such post'
-      })
-    }
 
     res.status(200).json(post)
   } catch (error) {

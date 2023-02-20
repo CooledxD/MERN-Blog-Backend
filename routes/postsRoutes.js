@@ -50,6 +50,12 @@ router.put('/:postId',
   updatePost
 )
 
+// Get Post By Id
+// /posts/:postId
+router.get('/:postId', 
+  getPostById
+)
+
 // Get All Posts
 // /posts/
 router.get('/', 
@@ -61,12 +67,6 @@ router.get('/',
 router.get('/user', 
   verifyAccessToken, 
   getUserPosts
-)
-
-// Get Post By Id
-// /posts/:id
-router.get('/:id', 
-  getPostById
 )
 
 // Get post comments
