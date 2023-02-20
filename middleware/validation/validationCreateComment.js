@@ -18,6 +18,7 @@ const createCommentSchema = Joi.object({
 
 export const validationCreateComment = async (req, res, next) => {
   try {
+    // validation of the request body
     const value = await createCommentSchema.validateAsync(req.body, {
       errors: {
         wrap: {

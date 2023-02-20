@@ -20,6 +20,7 @@ const removeCommentSchema = Joi.object({
 
 export const validationRemoveComment = async (req, res, next) => {
   try {
+    // validation of the request body
     await removeCommentSchema.validateAsync(req.body, {
       errors: {
         wrap: {
@@ -28,6 +29,7 @@ export const validationRemoveComment = async (req, res, next) => {
       }
     })
 
+    // looking for a comment in the database
     const comment = await Comment.findById(req.body.commentId)
 
     if(!comment) {
