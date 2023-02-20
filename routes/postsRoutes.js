@@ -9,6 +9,7 @@ import { validationUpdatePost } from "../middleware/validation/validationUpdateP
 import { validationGetPost } from '../middleware/validation/validationGetPost.js'
 import { validationGetAllPosts } from "../middleware/validation/validationGetAllPosts.js";
 import { validationPostComments } from "../middleware/validation/validationPostComents.js";
+import { validationAddRemoveLikes } from "../middleware/validation/validationAddRemoveLikes.js";
 
 import { upload } from "../middleware/multer.js";
 
@@ -82,16 +83,18 @@ router.get('/:postId/comments',
 )
 
 // Adding a user's like to a post
-// /posts/likes/:id
-router.put('/likes/:id', 
+// /posts/:postId/likes
+router.put('/:postId/likes', 
   verifyAccessToken, 
+  validationAddRemoveLikes,
   addUserLikePost
 )
 
 // Remove a user's like to a post
-// /posts/likes/:id
-router.delete('/likes/:id', 
+// /posts/:postId/likes
+router.delete('/:postId/likes', 
   verifyAccessToken, 
+  validationAddRemoveLikes,
   removeUserLikePost
 )
 

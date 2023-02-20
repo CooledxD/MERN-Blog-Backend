@@ -220,16 +220,16 @@ export const addUserLikePost = async (req, res) => {
     const { userId } = req
 
     // Adding the username of the user to the likes field in the post document
-    await Post.findByIdAndUpdate(req.params.id, {
+    await Post.findByIdAndUpdate(req.params.postId, {
       $push: { likes: username }
     })
 
     // Adding the post id to the likes field in the user's document
     await User.findByIdAndUpdate(userId, {
-      $push: { likes: req.params.id }
+      $push: { likes: req.params.postId }
     })
 
-    res.status(204).json({
+    res.status(200).json({
       message: 'success'
     })
   } catch (error) {
@@ -249,16 +249,16 @@ export const removeUserLikePost = async (req, res) => {
     const { userId } = req
 
     // Removing the user name of the user from the likes field in the post document
-    await Post.findByIdAndUpdate(req.params.id, {
+    await Post.findByIdAndUpdate(req.params.postId, {
       $pull: { likes: username }
     })
 
     // Removing the post id from the likes field in the user's document
     await User.findByIdAndUpdate(userId, {
-      $pull: { likes: req.params.id }
+      $pull: { likes: req.params.postId }
     })
 
-    res.status(204).json({
+    res.status(200).json({
       message: 'success'
     })
   } catch (error) {
