@@ -2,6 +2,9 @@ import { Router } from "express";
 
 // Middleware
 import { verifyAccessToken } from "../middleware/verifyTokens/verifyAccessToken.js";
+
+import { validationCreatePost } from "../middleware/validation/validationCreatePost.js";
+
 import { upload } from "../middleware/multer.js";
 
 // Controllers
@@ -22,8 +25,9 @@ const router = new Router()
 // Create Post
 // /posts/
 router.post('/', 
-  upload, 
-  verifyAccessToken, 
+  verifyAccessToken,
+  upload,
+  validationCreatePost,
   createPost
 )
 
@@ -49,8 +53,8 @@ router.get('/:id',
 // Update Post
 // /posts/:id
 router.put('/:id', 
-  upload, 
-  verifyAccessToken, 
+  verifyAccessToken,
+  upload,
   updatePost
 )
 

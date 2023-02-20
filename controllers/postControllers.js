@@ -12,8 +12,7 @@ const __dirname = fileURLToPath(new URL('.', import.meta.url))
 export const createPost = async (req, res) => {
   try {
     // Request
-    const title = req.body.title.trim()
-    const text = req.body.text.trim()
+    const { title, text } = req.body
     const image = req.file ? req.file.filename : ''
     const { userId } = req
 
@@ -48,84 +47,6 @@ export const createPost = async (req, res) => {
       message: 'Failed to create an article',
     })
   }
-}
-
-// Get All Posts
-export const getAllPosts = async (req, res) => {
-  try {
-    // Database
-    const posts = await Post.find().sort('-createdAt')
-    const popularPosts = await Post.find().sort('-views').limit(5)
-
-    // Validation
-    if(!posts) {
-      return res.status(404).json({ 
-        message: 'There are no posts'
-      })
-    }
-
-    res.status(200).json({
-      posts,
-      popularPosts
-    })
-  } catch (error) {
-    console.log(error)
-
-    res.status(500).json({
-      message: 'Something went wrong'
-    })
-  }
-}
-
-// Get Post By Id
-export const getPostById = async (req, res) => {
-  try {
-    // Database
-    const post = await Post.findByIdAndUpdate(req.params.id, {
-      $inc: { views: 1 }
-    })
-
-    // Validation
-    if(!post) {
-      return res.status(404).json({
-        message: 'There is no such post'
-      })
-    }
-
-    res.status(200).json(post)
-  } catch (error) {
-    console.log(error)
-
-    res.status(500).json({
-      message: 'Something went wrong'
-    })
-  }
-}
-
-// Get User Posts
-export const getUserPosts = async (req, res) => {
-  try {
-    // Database
-    const user = await User.findById(req.userId)
-
-    // Get user posts
-    const list = await Promise.all(
-      user.posts.map(post => {
-        return Post.findById(post._id)
-      })
-    )
-
-    // Sorting posts by creation date
-    list?.sort((a, b) => b?.createdAt - a?.createdAt)
-
-    res.status(200).json(list)
-  } catch (error) {
-    console.log(error)
-
-    res.status(500).json({
-      message: 'Something went wrong',
-    })
-  } 
 }
 
 // Remove post
@@ -219,6 +140,84 @@ export const updatePost = async (req, res) => {
       message: 'Something went wrong',
     })
   }
+}
+
+// Get Post By Id
+export const getPostById = async (req, res) => {
+  try {
+    // Database
+    const post = await Post.findByIdAndUpdate(req.params.id, {
+      $inc: { views: 1 }
+    })
+
+    // Validation
+    if(!post) {
+      return res.status(404).json({
+        message: 'There is no such post'
+      })
+    }
+
+    res.status(200).json(post)
+  } catch (error) {
+    console.log(error)
+
+    res.status(500).json({
+      message: 'Something went wrong'
+    })
+  }
+}
+
+// Get All Posts
+export const getAllPosts = async (req, res) => {
+  try {
+    // Database
+    const posts = await Post.find().sort('-createdAt')
+    const popularPosts = await Post.find().sort('-views').limit(5)
+
+    // Validation
+    if(!posts) {
+      return res.status(404).json({ 
+        message: 'There are no posts'
+      })
+    }
+
+    res.status(200).json({
+      posts,
+      popularPosts
+    })
+  } catch (error) {
+    console.log(error)
+
+    res.status(500).json({
+      message: 'Something went wrong'
+    })
+  }
+}
+
+// Get User Posts
+export const getUserPosts = async (req, res) => {
+  try {
+    // Database
+    const user = await User.findById(req.userId)
+
+    // Get user posts
+    const list = await Promise.all(
+      user.posts.map(post => {
+        return Post.findById(post._id)
+      })
+    )
+
+    // Sorting posts by creation date
+    list?.sort((a, b) => b?.createdAt - a?.createdAt)
+
+    res.status(200).json(list)
+  } catch (error) {
+    console.log(error)
+
+    res.status(500).json({
+      message: 'Something went wrong',
+    })
+  } 
 }
 
 // Get post comments

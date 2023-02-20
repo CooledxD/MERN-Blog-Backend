@@ -12,8 +12,8 @@ const router = new Router()
 // Update avatar
 // /user/avatar
 router.put('/avatar', 
-  upload, 
-  verifyAccessToken, 
+  verifyAccessToken,
+  upload,
   updateAvatar
 )
 
