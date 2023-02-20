@@ -8,6 +8,7 @@ import { validationRemovePost } from "../middleware/validation/validationRemoveP
 import { validationUpdatePost } from "../middleware/validation/validationUpdatePost.js";
 import { validationGetPost } from '../middleware/validation/validationGetPost.js'
 import { validationGetAllPosts } from "../middleware/validation/validationGetAllPosts.js";
+import { validationPostComments } from "../middleware/validation/validationPostComents.js";
 
 import { upload } from "../middleware/multer.js";
 
@@ -74,8 +75,9 @@ router.get('/user',
 )
 
 // Get post comments
-// /posts/comments/:id
-router.get('/comments/:id', 
+// /posts/:postId/comments
+router.get('/:postId/comments', 
+  validationPostComments,
   getPostComments
 )
 

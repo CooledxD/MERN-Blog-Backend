@@ -200,22 +200,7 @@ export const getUserPosts = async (req, res) => {
 // Get post comments
 export const getPostComments = async (req, res) => {
   try {
-    // Database
-    const post = await Post.findById(req.params.id)
-
-    // Validation
-    if(!post) {
-      return res.status(404).json({
-        message: 'There is no such post'
-      })
-    }
-
-    // We get all the comments to the post
-    const list = await Promise.all(
-      post.comments.map((comment) => {
-        return Comment.findById(comment)
-      })
-    )
+    const { list } = req.body
 
     res.status(200).json(list)
   } catch (error) {
