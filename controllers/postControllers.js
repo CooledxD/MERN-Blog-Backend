@@ -158,13 +158,6 @@ export const getAllPosts = async (req, res) => {
     const posts = await Post.find().sort('-createdAt')
     const popularPosts = await Post.find().sort('-views').limit(5)
 
-    // Validation
-    if(!posts) {
-      return res.status(404).json({ 
-        message: 'There are no posts'
-      })
-    }
-
     res.status(200).json({
       posts,
       popularPosts

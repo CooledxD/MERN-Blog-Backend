@@ -6,6 +6,8 @@ import { verifyAccessToken } from "../middleware/verifyTokens/verifyAccessToken.
 import { validationCreatePost } from "../middleware/validation/validationCreatePost.js";
 import { validationRemovePost } from "../middleware/validation/validationRemovePost.js";
 import { validationUpdatePost } from "../middleware/validation/validationUpdatePost.js";
+import { validationGetPost } from '../middleware/validation/validationGetPost.js'
+import { validationGetAllPosts } from "../middleware/validation/validationGetAllPosts.js";
 
 import { upload } from "../middleware/multer.js";
 
@@ -52,13 +54,15 @@ router.put('/:postId',
 
 // Get Post By Id
 // /posts/:postId
-router.get('/:postId', 
+router.get('/:postId',
+  validationGetPost,
   getPostById
 )
 
 // Get All Posts
 // /posts/
 router.get('/', 
+  validationGetAllPosts,
   getAllPosts
 )
 
