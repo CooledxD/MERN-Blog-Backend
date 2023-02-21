@@ -30,8 +30,7 @@ export const createComment = async (req, res) => {
     })
 
     res.status(201).json({
-      newComment,
-      message: 'Comment created'
+      newComment
     })
   } catch (error) {
     console.log(error)
@@ -56,9 +55,7 @@ export const removeComment = async (req, res) => {
       $pull: { comments: commentId }
     })
 
-    res.status(200).json({
-      message: 'The comment has been deleted'
-    })
+    res.status(204).json()
   } catch (error) {
     console.log(error)
 

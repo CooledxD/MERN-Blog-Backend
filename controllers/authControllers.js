@@ -25,7 +25,7 @@ export const register = async (req, res) => {
     const url = `${process.env.CLIENT_URL}/auth/activate-account/${activationToken}`
 
     // Creating and sending an account activation email
-    sendActivationEmail({email, url})
+    await sendActivationEmail({email, url})
 
     res.status(200).json({
       message: 'Please click on the activation link we sent to your email to complete your registration'

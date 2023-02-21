@@ -5,9 +5,7 @@ export const validationActivationAccount = async (req, res, next) => {
     const { email } = req.body
 
     // we do not allow the token to be reused if the user is already registered
-    const isUsedEmail = await User.findOne({
-      email: email
-    })
+    const isUsedEmail = await User.findOne({ email })
 
     if (isUsedEmail) {
       throw new Error('This email already exists')

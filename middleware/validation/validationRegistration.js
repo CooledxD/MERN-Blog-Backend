@@ -14,6 +14,10 @@ const registrationSchema = Joi.object({
       'string.pattern.base': 'username must not start with digits'
     }),
 
+  email: Joi.string()
+  .email()
+  .required(),
+
   password: Joi.string()
     .alphanum()
     .min(8)
@@ -28,11 +32,7 @@ const registrationSchema = Joi.object({
     .valid(Joi.ref('password'))
     .messages({
       'any.only': 'passwords don\'t match'
-    }),
-
-  email: Joi.string()
-    .email()
-    .required()
+    })
 })
 
 export const validationRegistration = async (req, res, next) => {

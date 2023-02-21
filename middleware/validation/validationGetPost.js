@@ -15,7 +15,7 @@ export const validationGetPost = async (req, res, next) => {
         })
     )
 
-    const post = Post.findById(req.params.postId)
+    const post = await Post.findById(req.params.postId)
 
     if (!post) {
       throw new Error('There is no such post')

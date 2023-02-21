@@ -7,7 +7,10 @@ const updatePostSchema = Joi.object({
 
   text: Joi.string()
     .trim()
-    .required()
+    .required(),
+
+  image: Joi.string()
+  .empty('')
 })
 
 export const validationUpdatePost = async (req, res, next) => {

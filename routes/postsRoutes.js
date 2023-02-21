@@ -37,6 +37,20 @@ router.post('/',
   createPost
 )
 
+// Get All Posts
+// /posts/
+router.get('/', 
+  validationGetAllPosts,
+  getAllPosts
+)
+
+// Get User Posts
+// /posts/user
+router.get('/user', 
+  verifyAccessToken, 
+  getUserPosts
+)
+
 // Remove post
 // /posts/:postId
 router.delete('/:postId', 
@@ -59,20 +73,6 @@ router.put('/:postId',
 router.get('/:postId',
   validationGetPost,
   getPostById
-)
-
-// Get All Posts
-// /posts/
-router.get('/', 
-  validationGetAllPosts,
-  getAllPosts
-)
-
-// Get User Posts
-// /posts/user
-router.get('/user', 
-  verifyAccessToken, 
-  getUserPosts
 )
 
 // Get post comments

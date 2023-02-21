@@ -12,7 +12,10 @@ const createPostSchema = Joi.object({
 
   text: Joi.string()
     .trim()
-    .required()
+    .required(),
+
+  image: Joi.string()
+    .empty('')
 })
 
 export const validationCreatePost = async (req, res, next) => {

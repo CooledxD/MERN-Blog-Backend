@@ -200,7 +200,13 @@ export const getUserPosts = async (req, res) => {
 // Get post comments
 export const getPostComments = async (req, res) => {
   try {
-    const { list } = req.body
+    const { post } = req.body
+
+    const list = await Promise.all(
+      post.comments.map((comment) => {
+        return Comment.findById(comment)
+      })
+    )
 
     res.status(200).json(list)
   } catch (error) {

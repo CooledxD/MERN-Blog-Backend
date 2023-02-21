@@ -27,7 +27,4 @@ router.delete('/',
   removeComment
 )
 
-// // Update comment
-// router.put('/:id', checkAuth, createComment)
-
 export default router

@@ -1,6 +1,5 @@
 import Joi from "joi";
 
-import Comment from "../../models/commentModel.js";
 import Post from "../../models/postModel.js";
 
 export const validationPostComments = async (req, res, next) => {
@@ -23,19 +22,8 @@ export const validationPostComments = async (req, res, next) => {
       throw new Error('There is no such post')
     }
 
-    // check if there are any comments
-    const list = await Promise.all(
-      post.comments.map((comment) => {
-        return Comment.findById(comment)
-      })
-    )
-
-    if (!list.length) {
-      throw new Error('There are no comments')
-    }
-
     req.body = {
-      list
+      post
     }
 
     next()
