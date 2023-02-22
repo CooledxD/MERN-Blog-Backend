@@ -3,15 +3,17 @@ import Joi from 'joi'
 
 export const verifyAccessToken = async (req, res, next) => {
   try {
+    const token = req.headers.authorization.split(' ').pop()
+
     // Validation token
     Joi.assert(
-      req.headers.authorization, 
+      token, 
       Joi.string().required()
     )
 
     // Decoded token
     const tokenData = jwt.verify(
-      req.headers.authorization, 
+      token, 
       process.env.JWT_ACCESS_SECRET
     )
 
