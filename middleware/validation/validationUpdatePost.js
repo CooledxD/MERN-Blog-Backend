@@ -7,6 +7,7 @@ const updatePostSchema = Joi.object({
 
   text: Joi.string()
     .trim()
+    .replace(/<[^>]+>/g, '')
     .required(),
 
   image: Joi.string()
