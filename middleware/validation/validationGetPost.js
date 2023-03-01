@@ -8,7 +8,7 @@ export const validationGetPost = async (req, res, next) => {
     Joi.assert(
       req.params.postId, 
       Joi.string()
-        .pattern(/^[a-z0-9]+$/)
+        .pattern(/^[0-9a-fA-F]{24}$/)
         .required()
         .messages({
           'string.pattern.base': 'incorrect post id'
