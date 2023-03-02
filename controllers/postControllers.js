@@ -184,14 +184,6 @@ export const getUserPosts = async (req, res) => {
       })
     )
 
-    if (!list.length) {
-      res.status(400).json({
-        message: 'No posts'
-      })
-
-      return
-    }
-
     // Sorting posts by creation date
     list?.sort((a, b) => b?.createdAt - a?.createdAt)
 

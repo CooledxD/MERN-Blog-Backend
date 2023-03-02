@@ -46,7 +46,7 @@ router.get('/',
 
 // Get User Posts
 // /posts/user
-router.get('/user', 
+router.get('/user-posts', 
   verifyAccessToken, 
   getUserPosts
 )
